@@ -7,38 +7,15 @@ use Phalcon\Acl\Role as AclRole;
 use Phalcon\Acl\Resource as AclResource;
 use Keis\Modules\Frontend\Models\Profiles;
 
-/**
- * Vokuro\Acl\Acl
- */
 class Acl extends Component
 {
 
-    /**
-     * The ACL Object
-     *
-     * @var \Phalcon\Acl\Adapter\Memory
-     */
     private $acl;
 
-    /**
-     * The file path of the ACL cache file.
-     *
-     * @var string
-     */
     private $filePath;
 
-    /**
-     * Define the resources that are considered "private". These controller => actions require authentication.
-     *
-     * @var array
-     */
     private $privateResources = array();
 
-    /**
-     * Human-readable descriptions of the actions used in {@see $privateResources}
-     *
-     * @var array
-     */
     private $actionDescriptions = [
         'index' => 'Access',
         'search' => 'Search',
@@ -48,36 +25,17 @@ class Acl extends Component
         'changePassword' => 'Change password'
     ];
 
-    /**
-     * Checks if a controller is private or not
-     *
-     * @param string $controllerName
-     * @return boolean
-     */
     public function isPrivate($controllerName)
     {
         $controllerName = strtolower($controllerName);
         return isset($this->privateResources[$controllerName]);
     }
 
-    /**
-     * Checks if the current profile is allowed to access a resource
-     *
-     * @param string $profile
-     * @param string $controller
-     * @param string $action
-     * @return boolean
-     */
     public function isAllowed($profile, $controller, $action)
     {
         return $this->getAcl()->isAllowed($profile, $controller, $action);
     }
 
-    /**
-     * Returns the ACL list
-     *
-     * @return \Phalcon\Acl\Adapter\Memory
-     */
     public function getAcl()
     {
         // Check if the ACL is already created
@@ -114,12 +72,6 @@ class Acl extends Component
         return $this->acl;
     }
 
-    /**
-     * Returns the permissions assigned to a profile
-     *
-     * @param Profiles $profile
-     * @return array
-     */
     public function getPermissions(Profiles $profile)
     {
         $permissions = [];
@@ -129,22 +81,11 @@ class Acl extends Component
         return $permissions;
     }
 
-    /**
-     * Returns all the resources and their actions available in the application
-     *
-     * @return array
-     */
     public function getResources()
     {
         return $this->privateResources;
     }
 
-    /**
-     * Returns the action description according to its simplified name
-     *
-     * @param string $action
-     * @return string
-     */
     public function getActionDescription($action)
     {
         if (isset($this->actionDescriptions[$action])) {
@@ -154,11 +95,6 @@ class Acl extends Component
         }
     }
 
-    /**
-     * Rebuilds the access list into a file
-     *
-     * @return \Phalcon\Acl\Adapter\Memory
-     */
     public function rebuild()
     {
         $acl = new AclMemory();
@@ -213,11 +149,6 @@ class Acl extends Component
     }
 
 
-    /**
-     * Set the acl cache file path
-     *
-     * @return string
-     */
     protected function getFilePath()
     {
         if (!isset($this->filePath)) {
@@ -227,11 +158,6 @@ class Acl extends Component
         return $this->filePath;
     }
 
-    /**
-     * Adds an array of private resources to the ACL object.
-     *
-     * @param array $resources
-     */
     public function addPrivateResources(array $resources) {
         if (count($resources) > 0) {
             $this->privateResources = array_merge($this->privateResources, $resources);

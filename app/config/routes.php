@@ -27,6 +27,15 @@ foreach ($application->getModules() as $key => $module) {
     ]);
 }
 
+
+$router->add(
+    "/login",
+    [
+        "controller" => "auth",
+        "action"     => "login"
+    ]
+)->setName("login");
+
 /*$router->add('/confirm/{code}/{email}', [
     'controller' => 'user_control',
     'action' => 'confirmEmail'

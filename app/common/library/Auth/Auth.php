@@ -7,19 +7,8 @@ use Keis\Modules\Frontend\Models\RememberTokens;
 use Keis\Modules\Frontend\Models\SuccessLogins;
 use Keis\Modules\Frontend\Models\FailedLogins;
 
-/**
- * Vokuro\Auth\Auth
- * Manages Authentication/Identity Management in Vokuro
- */
 class Auth extends Component
 {
-    /**
-     * Checks the user credentials
-     *
-     * @param array $credentials
-     * @return boolean
-     * @throws Exception
-     */
     public function check($credentials)
     {
 
@@ -54,12 +43,6 @@ class Auth extends Component
         ]);
     }
 
-    /**
-     * Creates the remember me environment settings the related cookies and generating tokens
-     *
-     * @param \Vokuro\Models\Users $user
-     * @throws Exception
-     */
     public function saveSuccessLogin($user)
     {
         $successLogin = new SuccessLogins();
@@ -72,12 +55,6 @@ class Auth extends Component
         }
     }
 
-    /**
-     * Implements login throttling
-     * Reduces the effectiveness of brute force attacks
-     *
-     * @param int $userId
-     */
     public function registerUserThrottling($userId)
     {
         $failedLogin = new FailedLogins();
@@ -109,11 +86,6 @@ class Auth extends Component
         }
     }
 
-    /**
-     * Creates the remember me environment settings the related cookies and generating tokens
-     *
-     * @param \Vokuro\Models\Users $user
-     */
     public function createRememberEnvironment(Users $user)
     {
         $userAgent = $this->request->getUserAgent();
@@ -131,21 +103,11 @@ class Auth extends Component
         }
     }
 
-    /**
-     * Check if the session has a remember me cookie
-     *
-     * @return boolean
-     */
     public function hasRememberMe()
     {
         return $this->cookies->has('RMU');
     }
 
-    /**
-     * Logs on using the information in the cookies
-     *
-     * @return \Phalcon\Http\Response
-     */
     public function loginWithRememberMe()
     {
         $userId = $this->cookies->get('RMU')->getValue();
@@ -196,12 +158,6 @@ class Auth extends Component
         return $this->response->redirect('session/login');
     }
 
-    /**
-     * Checks if the user is banned/inactive/suspended
-     *
-     * @param \Vokuro\Models\Users $user
-     * @throws Exception
-     */
     public function checkUserFlags(Users $user)
     {
         if ($user->active != 'Y') {
@@ -217,30 +173,17 @@ class Auth extends Component
         }
     }
 
-    /**
-     * Returns the current identity
-     *
-     * @return array
-     */
     public function getIdentity()
     {
         return $this->session->get('auth-identity');
     }
 
-    /**
-     * Returns the current identity
-     *
-     * @return string
-     */
     public function getName()
     {
         $identity = $this->session->get('auth-identity');
         return $identity['name'];
     }
 
-    /**
-     * Removes the user identity information from session
-     */
     public function remove()
     {
         if ($this->cookies->has('RMU')) {
@@ -260,12 +203,6 @@ class Auth extends Component
         $this->session->remove('auth-identity');
     }
 
-    /**
-     * Auths the user by his/her id
-     *
-     * @param int $id
-     * @throws Exception
-     */
     public function authUserById($id)
     {
         $user = Users::findFirstById($id);
@@ -282,12 +219,6 @@ class Auth extends Component
         ]);
     }
 
-    /**
-     * Get the entity related to user in the active identity
-     *
-     * @return \Vokuro\Models\Users
-     * @throws Exception
-     */
     public function getUser()
     {
         $identity = $this->session->get('auth-identity');
@@ -304,12 +235,6 @@ class Auth extends Component
         return false;
     }
     
-    /**
-     * Returns the current token user
-     *
-     * @param string $token
-     * @return boolean
-     */
     public function findFirstByToken($token)
     {
         $userToken = RememberTokens::findFirst([
@@ -323,10 +248,7 @@ class Auth extends Component
         return $user_id;
     }
 
-    /**
-     * Delete the current user token in session
-     */
-    public function deleteToken($userId) 
+    public function deleteToken($userId)
     {
         $user = RememberTokens::find([
             'conditions' => 'usersId = :userId:',

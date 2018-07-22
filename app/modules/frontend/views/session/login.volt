@@ -1,5 +1,5 @@
 {{ content() }}
-
+<div class="h250"></div>
 <div align="center" class="well">
 
 	{{ form('class': 'form-search') }}

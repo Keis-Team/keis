@@ -6,22 +6,12 @@ use Swift_Message as Message;
 use Swift_SmtpTransport as Smtp;
 use Phalcon\Mvc\View;
 
-/**
- * Vokuro\Mail\Mail
- * Sends e-mails based on pre-defined templates
- */
 class Mail extends Component
 {
     protected $transport;
 
     protected $amazonSes;
 
-    /**
-     * Send a raw e-mail via AmazonSES
-     *
-     * @param string $raw
-     * @return bool
-     */
     private function amazonSESSend($raw)
     {
         if ($this->amazonSes == null) {
@@ -53,13 +43,6 @@ class Mail extends Component
         return true;
     }
 
-    /**
-     * Applies a template to be used in the e-mail
-     *
-     * @param string $name
-     * @param array $params
-     * @return string
-     */
     public function getTemplate($name, $params)
     {
         $parameters = array_merge([
@@ -73,16 +56,6 @@ class Mail extends Component
         return $view->getContent();
     }
 
-    /**
-     * Sends e-mails via AmazonSES based on predefined templates
-     *
-     * @param array $to
-     * @param string $subject
-     * @param string $name
-     * @param array $params
-     * @return bool|int
-     * @throws Exception
-     */
     public function send($to, $subject, $name, $params)
     {
         // Settings

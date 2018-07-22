@@ -4,15 +4,19 @@ namespace Keis\Modules\Frontend\Controllers;
 
 use Phalcon\Mvc\Controller;
 use Phalcon\Mvc\Dispatcher;
+use Phalcon\Tag;
 
-/**
- * ControllerBase
- * This is the base controller for all controllers in the application
- *
- * @property \Vokuro\Auth\Auth auth
- */
 class ControllerBase extends Controller
 {
+    protected static $pre_tittle = 'Keis | ';
+
+    public function initialize()
+    {
+        $this->tag->setDoctype(Tag::HTML401_STRICT);
+        $this->tag->prependTitle(self::$pre_tittle);
+        // $this->view->setTemplateAfter('main');
+    }
+
     /**
      * Execute before the router so we can determine if this is a private controller, and must be authenticated, or a
      * public controller that is open to all.
@@ -22,6 +26,9 @@ class ControllerBase extends Controller
      */
     public function beforeExecuteRoute(Dispatcher $dispatcher)
     {
+        //$this->init_default_styles();
+
+
         $controllerName = $dispatcher->getControllerName();
 
         // Only check permissions on private controllers
@@ -65,9 +72,18 @@ class ControllerBase extends Controller
         }
     }
 
-//    public function initialize()
-//    {
-//        $this->tag->prependTitle('INVO | ');
-//        $this->view->setTemplateAfter('main');
-//    }
+    protected function init_default_styles()
+    {
+        /*$headerCollection = $this->assets->collection("header");
+
+        $headerCollection->addCss("js/jquery.js");
+        $headerCollection->addCss("js/bootstrap.min.js");
+
+        $footerCollection = $this->assets->collection("footer");
+
+        $footerCollection->addJs("js/jquery.js");
+        $footerCollection->addJs("js/bootstrap.min.js");*/
+    }
+
+
 }

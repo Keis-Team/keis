@@ -8,10 +8,6 @@ use Keis\Modules\Frontend\Forms\UsersForm;
 use Keis\Modules\Frontend\Models\Users;
 use Keis\Modules\Frontend\Models\PasswordChanges;
 
-/**
- * Vokuro\Controllers\UsersController
- * CRUD to manage users
- */
 class UsersController extends ControllerBase
 {
 
@@ -20,18 +16,12 @@ class UsersController extends ControllerBase
         $this->view->setTemplateBefore('private');
     }
 
-    /**
-     * Default action, shows the search form
-     */
     public function indexAction()
     {
         $this->persistent->conditions = null;
         $this->view->form = new UsersForm();
     }
 
-    /**
-     * Searches for users
-     */
     public function searchAction()
     {
         $numberPage = 1;
@@ -64,9 +54,6 @@ class UsersController extends ControllerBase
         $this->view->page = $paginator->getPaginate();
     }
 
-    /**
-     * Creates a User
-     */
     public function createAction()
     {
         $form = new UsersForm(null);
@@ -101,9 +88,6 @@ class UsersController extends ControllerBase
         $this->view->form = $form;
     }
 
-    /**
-     * Saves the user from the 'edit' action
-     */
     public function editAction($id)
     {
         $user = Users::findFirstById($id);
@@ -156,11 +140,6 @@ class UsersController extends ControllerBase
         ]);
     }
 
-    /**
-     * Deletes a User
-     *
-     * @param int $id
-     */
     public function deleteAction($id)
     {
         $user = Users::findFirstById($id);
@@ -182,9 +161,6 @@ class UsersController extends ControllerBase
         ]);
     }
 
-    /**
-     * Users must use this action to change its password
-     */
     public function changePasswordAction()
     {
         $form = new ChangePasswordForm();

@@ -12,7 +12,7 @@ return new Config([
         'host' => '127.0.0.1',
         'username' => 'root',
         'password' => '',
-        'dbname' => 'vokuro',
+        'dbname' => 'keis',
         'charset' => 'utf8',
     ],
     'application' => [
@@ -20,8 +20,8 @@ return new Config([
         'modelsDir' => APP_PATH . '/common/models/',
         'migrationsDir' => APP_PATH . '/migrations/',
         'cacheDir' => BASE_PATH . '/cache/',
-        'baseUri' => preg_replace('/public([\/\\\\])index.php$/', '', $_SERVER["PHP_SELF"]),
-        'publicUrl' => 'vokuro.phalconphp.com',
+        'baseUri' => '/keiz/',
+        'publicUrl' => 'keis.com',
         'cryptSalt' => 'eEAfR|_&G&f,+vU]:jFr!!A&+71w1Ms9~8_4L!<@[N@DyaIP_2My|:+.u>/6m,$D'
     ],
     'mail' => [
@@ -34,10 +34,6 @@ return new Config([
             'username' => '',
             'password' => ''
         ]
-    ],
-    'amazon' => [
-        'AWSAccessKeyId' => '',
-        'AWSSecretKey' => ''
     ],
     'logger' => [
         'path' => BASE_PATH . '/logs/',

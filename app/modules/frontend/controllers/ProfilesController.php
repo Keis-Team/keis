@@ -7,33 +7,22 @@ use Phalcon\Paginator\Adapter\Model as Paginator;
 use Keis\Modules\Frontend\Forms\ProfilesForm;
 use Keis\Modules\Frontend\Models\Profiles;
 
-/**
- * Vokuro\Controllers\ProfilesController
- * CRUD to manage profiles
- */
+
 class ProfilesController extends ControllerBase
 {
 
-    /**
-     * Default action. Set the private (authenticated) layout (layouts/private.volt)
-     */
+
     public function initialize()
     {
         $this->view->setTemplateBefore('private');
     }
 
-    /**
-     * Default action, shows the search form
-     */
     public function indexAction()
     {
         $this->persistent->conditions = null;
         $this->view->form = new ProfilesForm();
     }
 
-    /**
-     * Searches for profiles
-     */
     public function searchAction()
     {
         $numberPage = 1;
@@ -68,9 +57,6 @@ class ProfilesController extends ControllerBase
         $this->view->page = $paginator->getPaginate();
     }
 
-    /**
-     * Creates a new Profile
-     */
     public function createAction()
     {
         if ($this->request->isPost()) {
@@ -92,11 +78,6 @@ class ProfilesController extends ControllerBase
         $this->view->form = new ProfilesForm(null);
     }
 
-    /**
-     * Edits an existing Profile
-     *
-     * @param int $id
-     */
     public function editAction($id)
     {
         $profile = Profiles::findFirstById($id);
@@ -130,11 +111,6 @@ class ProfilesController extends ControllerBase
         $this->view->profile = $profile;
     }
 
-    /**
-     * Deletes a Profile
-     *
-     * @param int $id
-     */
     public function deleteAction($id)
     {
         $profile = Profiles::findFirstById($id);
