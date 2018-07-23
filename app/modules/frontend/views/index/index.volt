@@ -1,14 +1,14 @@
 {{ content() }}
 
 <!-- ***** Welcome Area Start ***** -->
-<section class="welcome_area clearfix" id="home" style="background-image: url(img/bg-img/welcome-bg.png)">
+<section class="welcome_area clearfix" id="home" style="background-image: url({{ url('img/bg-img/welcome-bg.png') }})">
     <div class="hero-slides owl-carousel">
         <!-- Single Hero Slides -->
         <div class="single-hero-slide d-flex align-items-end justify-content-center">
             <div class="hero-slide-content text-center">
                 <h2>A Clean and Modern Template</h2>
                 <h4>Get your freebie template now!</h4>
-                <img class="slide-img" src="img/bg-img/device.png" alt="">
+                {{ image('img/bg-img/device.png','class':'slide-img','alt':"") }}
             </div>
         </div>
         <!-- Single Hero Slides -->
@@ -16,7 +16,7 @@
             <div class="hero-slide-content text-center">
                 <h2>A Clean and Modern Template</h2>
                 <h4>Get your freebie template now!</h4>
-                <img class="slide-img" src="img/bg-img/device.png" alt="">
+                {{ image('img/bg-img/device.png','class':'slide-img','alt':"") }}
             </div>
         </div>
     </div>

@@ -14,7 +14,7 @@ class ControllerBase extends Controller
     {
         $this->tag->setDoctype(Tag::HTML401_STRICT);
         $this->tag->prependTitle(self::$pre_tittle);
-        // $this->view->setTemplateAfter('main');
+        //$this->view->setTemplateAfter('main');
     }
 
     /**

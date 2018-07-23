@@ -1,5 +1,7 @@
 <?php
+
 namespace Keis\Modules\Frontend\Controllers;
+
 use Phalcon\Tag;
 use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Paginator\Adapter\Model as Paginator;
@@ -8,25 +10,21 @@ use Keis\Modules\Frontend\Forms\UsersForm;
 use Keis\Modules\Frontend\Models\Users;
 use Keis\Modules\Frontend\Models\PasswordChanges;
 
-class UsersController extends ControllerBase
-{
+class UsersController extends ControllerBase {
 
-    public function initialize()
-    {
+    public function initialize() {
         $this->view->setTemplateBefore('private');
     }
 
-    public function indexAction()
-    {
+    public function indexAction() {
         $this->persistent->conditions = null;
-        $this->view->form = new UsersForm();
+        $this->view->form             = new UsersForm();
     }
 
-    public function searchAction()
-    {
+    public function searchAction() {
         $numberPage = 1;
         if ($this->request->isPost()) {
-            $query = Criteria::fromInput($this->di, 'Vokuro\Models\Users', $this->request->getPost());
+            $query                          = Criteria::fromInput($this->di, 'Vokuro\Models\Users', $this->request->getPost());
             $this->persistent->searchParams = $query->getParams();
         } else {
             $numberPage = $this->request->getQuery("page", "int");
@@ -46,32 +44,31 @@ class UsersController extends ControllerBase
         }
 
         $paginator = new Paginator([
-            "data" => $users,
+            "data"  => $users,
             "limit" => 10,
-            "page" => $numberPage
+            "page"  => $numberPage
         ]);
 
         $this->view->page = $paginator->getPaginate();
     }
 
-    public function createAction()
-    {
+    public function createAction() {
         $form = new UsersForm(null);
 
         if ($this->request->isPost()) {
 
             if ($form->isValid($this->request->getPost()) == false) {
-                
+
                 foreach ($form->getMessages() as $message) {
                     $this->flash->error($message);
                 }
-                
+
             } else {
 
                 $user = new Users([
-                    'name' => $this->request->getPost('name', 'striptags'),
+                    'name'       => $this->request->getPost('name', 'striptags'),
                     'profilesId' => $this->request->getPost('profilesId', 'int'),
-                    'email' => $this->request->getPost('email', 'email')
+                    'email'      => $this->request->getPost('email', 'email')
                 ]);
 
                 if (!$user->save()) {
@@ -88,26 +85,25 @@ class UsersController extends ControllerBase
         $this->view->form = $form;
     }
 
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $user = Users::findFirstById($id);
-        
+
         if (!$user) {
             $this->flash->error("User was not found");
             return $this->dispatcher->forward([
-                        'action' => 'index'
+                'action' => 'index'
             ]);
         }
 
         if ($this->request->isPost()) {
 
             $user->assign([
-                'name' => $this->request->getPost('name', 'striptags'),
+                'name'       => $this->request->getPost('name', 'striptags'),
                 'profilesId' => $this->request->getPost('profilesId', 'int'),
-                'email' => $this->request->getPost('email', 'email'),
-                'banned' => $this->request->getPost('banned'),
-                'suspended' => $this->request->getPost('suspended'),
-                'active' => $this->request->getPost('active')
+                'email'      => $this->request->getPost('email', 'email'),
+                'banned'     => $this->request->getPost('banned'),
+                'suspended'  => $this->request->getPost('suspended'),
+                'active'     => $this->request->getPost('active')
             ]);
 
             $form = new UsersForm($user, [
@@ -115,11 +111,11 @@ class UsersController extends ControllerBase
             ]);
 
             if ($form->isValid($this->request->getPost()) == false) {
-                
+
                 foreach ($form->getMessages() as $message) {
                     $this->flash->error($message);
                 }
-                
+
             } else {
 
                 if (!$user->save()) {
@@ -140,8 +136,7 @@ class UsersController extends ControllerBase
         ]);
     }
 
-    public function deleteAction($id)
-    {
+    public function deleteAction($id) {
         $user = Users::findFirstById($id);
         if (!$user) {
             $this->flash->error("User was not found");
@@ -161,8 +156,7 @@ class UsersController extends ControllerBase
         ]);
     }
 
-    public function changePasswordAction()
-    {
+    public function changePasswordAction() {
         $form = new ChangePasswordForm();
 
         if ($this->request->isPost()) {
@@ -176,11 +170,11 @@ class UsersController extends ControllerBase
 
                 $user = $this->auth->getUser();
 
-                $user->password = $this->security->hash($this->request->getPost('password'));
+                $user->password           = $this->security->hash($this->request->getPost('password'));
                 $user->mustChangePassword = 'N';
 
-                $passwordChange = new PasswordChanges();
-                $passwordChange->user = $user;
+                $passwordChange            = new PasswordChanges();
+                $passwordChange->user      = $user;
                 $passwordChange->ipAddress = $this->request->getClientAddress();
                 $passwordChange->userAgent = $this->request->getUserAgent();
 

@@ -1,12 +1,12 @@
 {{ content() }}
 
 <!-- ***** Breadcumb Area Start ***** -->
-<div class="mosh-breadcumb-area" style="background-image: url(img/core-img/breadcumb.png);">
-    <div class="container h-100">
+<div class="mosh-breadcumb-area" style="background-image: url({{ url('img/core-img/breadcumb.png') }});">
+    <div class="container h-75">
         <div class="row h-100 align-items-center">
             <div class="col-12">
                 <div class="bradcumbContent">
-                    <h2>Contact</h2>
+                    <h2>Register</h2>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>

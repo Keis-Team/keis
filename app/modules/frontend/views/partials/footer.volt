@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-12 col-sm-6 col-lg-3">
                     <div class="single-footer-widget mb-100">
-                        <a href="#" class="mb-50 d-block"><img src="img/core-img/logo.png" alt=""></a>
+                        <a href="#" class="mb-50 d-block">{{ image('img/core-img/logo.png','alt':"") }}</a>
                         <p>Etiam nec odio vestibulum est mattis effic iturut magna. Pellent esque sit amet tellus blandit. Etiam nec odio vestibul.</p>
                     </div>
                 </div>
@@ -55,19 +55,19 @@
                         <h5>Contact Info</h5>
                         <div class="footer-single-contact-info d-flex">
                             <div class="contact-icon">
-                                <img src="img/core-img/map.png" alt="">
+                                {{ image('img/core-img/map.png','alt':"") }}
                             </div>
                             <p>4127/ 5B-C Mislane Road, Gibraltar, UK</p>
                         </div>
                         <div class="footer-single-contact-info d-flex">
                             <div class="contact-icon">
-                                <img src="img/core-img/call.png" alt="">
+                                {{ image('img/core-img/call.png','alt':"") }}
                             </div>
                             <p>Main: 203-808-8613 <br> Office: 203-808-8648</p>
                         </div>
                         <div class="footer-single-contact-info d-flex">
                             <div class="contact-icon">
-                                <img src="img/core-img/message.png" alt="">
+                                {{ image('img/core-img/message.png','alt':"") }}
                             </div>
                             <p>office@yourbusiness.com</p>
                         </div>

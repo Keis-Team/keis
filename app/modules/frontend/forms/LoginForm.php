@@ -66,8 +66,8 @@ class LoginForm extends Form
 
         $this->add($csrf);
 
-        $this->add(new Submit('go', [
-            'class' => 'btn btn-success'
+        $this->add(new Submit('login', [
+            'class' => 'btn mosh-btn mt-50'
         ]));
     }
 }
